@@ -31,14 +31,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textNim = findViewById(R.id.nim_text);
         textNama = findViewById(R.id.nama_text);
 
-        Realm.init(this);
+        Realm.init(MainActivity.this);
 
-        RealmConfiguration configuration = new RealmConfiguration.Builder()
-                .name("mahasiswa.db")
-                .schemaVersion(0)
-                .build();
+        RealmConfiguration configuration = new RealmConfiguration.Builder().build();
 
-        Realm.setDefaultConfiguration(configuration);
+        realm = Realm.getInstance(configuration);
 
         btnTampil.setOnClickListener(this);
         btnSimpan.setOnClickListener(this);
@@ -53,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             sNim = Integer.parseInt(textNim.getText().toString());
             sNama = textNama.getText().toString();
 
-            if (sNim.equals("") || sNama.equals(""))
+            if (sNim.equals("") || sNama.isEmpty())
             {
                 Toast.makeText(this, "Silahkan lengkapi form terlebih dahulu", Toast.LENGTH_SHORT).show();
             }else{
